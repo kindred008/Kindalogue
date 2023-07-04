@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueList : MonoBehaviour
+namespace Kindred.Kindalogue.Runtime
 {
-    public List<Dialogue> dialogueLists = new List<Dialogue>();
-
-    public Dialogue GetFirstDialogue() 
-    { 
-        return dialogueLists[0]; 
-    }
-
-    public Dialogue GetNextDialogue(int currentIndex)
+    public class DialogueList : MonoBehaviour
     {
-        var nextIndex = currentIndex + 1;
-        if (nextIndex < dialogueLists.Count)
+        public List<Dialogue> dialogueLists = new List<Dialogue>();
+
+        public Dialogue GetFirstDialogue()
         {
-            return dialogueLists[nextIndex];
-        } else
+            return dialogueLists[0];
+        }
+
+        public Dialogue GetNextDialogue(int currentIndex)
         {
-            return null;
+            var nextIndex = currentIndex + 1;
+            if (nextIndex < dialogueLists.Count)
+            {
+                return dialogueLists[nextIndex];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

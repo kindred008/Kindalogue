@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-[System.Serializable]
-public class Dialogue
+namespace Kindred.Kindalogue.Runtime
 {
-    public string speakerName;
-    public string[] dialogueLines;
-
-    public string GetDialogueString()
+    [System.Serializable]
+    public class Dialogue
     {
-        StringBuilder dialogueString = new StringBuilder();
+        public string speakerName;
+        public string[] dialogueLines;
 
-        foreach(string line in dialogueLines)
+        public override string ToString()
         {
-            dialogueString.Append(line + "\n");
-        }
+            StringBuilder dialogueString = new StringBuilder();
 
-        return dialogueString.ToString();
+            foreach (string line in dialogueLines)
+            {
+                dialogueString.Append(line + "\n");
+            }
+
+            return dialogueString.ToString();
+        }
     }
 }
