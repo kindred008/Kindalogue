@@ -11,7 +11,20 @@ namespace Kindred.Kindalogue.Runtime
         private DialogueList dialogueList;
 
         private int currentIndex;
-        [HideInInspector] public Dialogue currentDialogue;
+
+        private Dialogue m_currentDialogue;
+
+        public Dialogue currentDialogue 
+        { 
+            get 
+            {
+                return m_currentDialogue;
+            }
+            private set 
+            {
+                m_currentDialogue = value;
+            }
+        }
 
         private void Awake()
         {
@@ -29,15 +42,15 @@ namespace Kindred.Kindalogue.Runtime
         {
             dialogueList = newDialogueList;
             currentIndex = 0;
-            currentDialogue = dialogueList.GetFirstDialogue();
+            m_currentDialogue = dialogueList.GetFirstDialogue();
         }
 
         public bool NextDialogue()
         {
-            currentDialogue = dialogueList.GetNextDialogue(currentIndex);
+            m_currentDialogue = dialogueList.GetNextDialogue(currentIndex);
             currentIndex++;
 
-            return currentDialogue != null;
+            return m_currentDialogue != null;
         }
     }
 }
