@@ -6,19 +6,28 @@ namespace Kindred.Kindalogue.Runtime
 {
     public class DialogueList : MonoBehaviour
     {
-        public List<Dialogue> dialogueLists = new List<Dialogue>();
+        [SerializeField] private List<Dialogue> dialogueList = new List<Dialogue>();
 
-        public Dialogue GetFirstDialogue()
+        /// <summary>
+        /// Gets the first Dialogue object for the conversation.
+        /// </summary>
+        /// <returns>Dialogue object</returns>
+        internal Dialogue GetFirstDialogue()
         {
-            return dialogueLists[0];
+            return dialogueList[0];
         }
 
-        public Dialogue GetNextDialogue(int currentIndex)
+        /// <summary>
+        /// Gets the next Dialogue object for a conversation based on given index.
+        /// </summary>
+        /// <param name="currentIndex">The index of where currently are in Dialogue List.</param>
+        /// <returns>Dialogue object</returns>
+        internal Dialogue GetNextDialogue(int currentIndex)
         {
             var nextIndex = currentIndex + 1;
-            if (nextIndex < dialogueLists.Count)
+            if (nextIndex < dialogueList.Count)
             {
-                return dialogueLists[nextIndex];
+                return dialogueList[nextIndex];
             }
             else
             {
