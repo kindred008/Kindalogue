@@ -52,7 +52,7 @@ namespace Kindred.Kindalogue.Runtime
         public Dialogue StartDialogue(DialogueList newDialogueList)
         {
             dialogueList = newDialogueList;
-            m_currentDialogue = dialogueList.GetFirstDialogue();
+            m_currentDialogue = CreateDialogue(dialogueList.GetFirstDialogue());
             currentIndex = 0;
 
             return m_currentDialogue;
@@ -64,10 +64,27 @@ namespace Kindred.Kindalogue.Runtime
         /// <returns>Next Dialogue object from list.</returns>
         public Dialogue NextDialogue()
         {
-            m_currentDialogue = dialogueList.GetNextDialogue(currentIndex);
+            m_currentDialogue = CreateDialogue(dialogueList.GetNextDialogue(currentIndex));
             currentIndex++;
 
             return m_currentDialogue;
+        }
+
+        private Dialogue CreateDialogue(Dialogue savedDialogue)
+        {
+            if (savedDialogue != null)
+            {
+                Dialogue newDialogue = new Dialogue()
+                {
+                    actor = savedDialogue.actor ?? dialogueList.defaultActor ?? null,
+                    dialogueLines = savedDialogue.dialogueLines,
+                };
+
+                return newDialogue;
+            } else
+            {
+                return null;
+            }
         }
     }
 }

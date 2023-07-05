@@ -6,6 +6,8 @@ namespace Kindred.Kindalogue.Runtime
 {
     public class DialogueList : MonoBehaviour
     {
+        public Actor defaultActor = null;
+
         [SerializeField] private List<Dialogue> dialogueList = new List<Dialogue>();
 
         /// <summary>
