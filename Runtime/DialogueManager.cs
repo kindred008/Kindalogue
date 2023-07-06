@@ -13,14 +13,12 @@ namespace Kindred.Kindalogue.Runtime
 
         private DialogueList dialogueList;
 
-        private int currentIndex;
-
         private Dialogue m_currentDialogue;
 
         /// <summary>
         /// Current running Dialogue being controlled by Dialogue Manager.
         /// </summary>
-        public Dialogue currentDialogue 
+        public Dialogue CurrentDialogue 
         { 
             get 
             {
@@ -53,7 +51,6 @@ namespace Kindred.Kindalogue.Runtime
         {
             dialogueList = newDialogueList;
             m_currentDialogue = CreateDialogue(dialogueList.GetFirstDialogue());
-            currentIndex = 0;
 
             return m_currentDialogue;
         }
@@ -64,8 +61,14 @@ namespace Kindred.Kindalogue.Runtime
         /// <returns>Next Dialogue object from list.</returns>
         public Dialogue NextDialogue()
         {
-            m_currentDialogue = CreateDialogue(dialogueList.GetNextDialogue(currentIndex));
-            currentIndex++;
+            m_currentDialogue = CreateDialogue(dialogueList.GetNextDialogue());
+
+            return m_currentDialogue;
+        }
+
+        public Dialogue PickChoice(Choice choice)
+        {
+            m_currentDialogue = CreateDialogue(dialogueList.GetNextDialogue(choice.NextDialogueId));
 
             return m_currentDialogue;
         }
@@ -78,6 +81,7 @@ namespace Kindred.Kindalogue.Runtime
                 {
                     Actor = savedDialogue.Actor ?? dialogueList.defaultActor ?? null,
                     DialogueLines = savedDialogue.DialogueLines,
+                    Choices = savedDialogue.Choices,
                 };
 
                 return newDialogue;

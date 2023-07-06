@@ -8,12 +8,19 @@ namespace Kindred.Kindalogue.Runtime
     [System.Serializable]
     public class Dialogue
     {
+        [SerializeField] private string m_uniqueId;
+
         // This will override Actor set in DialogueList. Leave Null to not overrite.
         [SerializeField] private Actor m_actor = null;
 
         [SerializeField] private string[] m_dialogueLines;
 
-        [SerializeField] private string[] m_choices;
+        [SerializeField] private Choice[] m_choices;
+
+        public string UniqueId
+        {
+            get => m_uniqueId;
+        }
 
         public Actor Actor
         {
@@ -25,6 +32,12 @@ namespace Kindred.Kindalogue.Runtime
         {
             get => m_dialogueLines;
             set => m_dialogueLines = value;
+        }
+
+        public Choice[] Choices
+        {
+            get => m_choices;
+            set => m_choices = value;
         }
 
         public override string ToString()
