@@ -30,14 +30,20 @@ namespace Kindred.Kindalogue.Runtime
         /// <returns>Dialogue object</returns>
         internal Dialogue GetNextDialogue()
         {
-            currentIndex = currentIndex + 1;
-            if (currentIndex < dialogueList.Count)
+            if (currentIndex < dialogueList.Count && !string.IsNullOrEmpty(dialogueList[currentIndex].NextDialogueId)) 
             {
-                return dialogueList[currentIndex];
-            }
-            else
+                return GetNextDialogue(dialogueList[currentIndex].NextDialogueId);
+            } else
             {
-                return null;
+                currentIndex = currentIndex + 1;
+                if (currentIndex < dialogueList.Count)
+                {
+                    return dialogueList[currentIndex];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

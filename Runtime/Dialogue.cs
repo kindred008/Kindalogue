@@ -17,6 +17,8 @@ namespace Kindred.Kindalogue.Runtime
 
         [SerializeField] private Choice[] m_choices;
 
+        [SerializeField] private string m_nextDialogueId;
+
         public string UniqueId
         {
             get => m_uniqueId;
@@ -38,6 +40,11 @@ namespace Kindred.Kindalogue.Runtime
         {
             get => m_choices;
             set => m_choices = value;
+        }
+
+        internal string NextDialogueId
+        {
+            get => m_nextDialogueId;
         }
 
         public override string ToString()

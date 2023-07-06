@@ -11,7 +11,7 @@ namespace Kindred.Kindalogue.Runtime
         [SerializeField] private string m_choiceText;
 
         [SerializeField] private string m_nextDialogueId;
-
+        
         public string ChoiceText
         {
             get => m_choiceText;
