@@ -76,8 +76,8 @@ namespace Kindred.Kindalogue.Runtime
             {
                 Dialogue newDialogue = new Dialogue()
                 {
-                    actor = savedDialogue.actor ?? dialogueList.defaultActor ?? null,
-                    dialogueLines = savedDialogue.dialogueLines,
+                    Actor = savedDialogue.Actor ?? dialogueList.defaultActor ?? null,
+                    DialogueLines = savedDialogue.DialogueLines,
                 };
 
                 return newDialogue;

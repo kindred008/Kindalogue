@@ -9,15 +9,29 @@ namespace Kindred.Kindalogue.Runtime
     public class Dialogue
     {
         // This will override Actor set in DialogueList. Leave Null to not overrite.
-        public Actor actor = null;
+        [SerializeField] private Actor m_actor = null;
 
-        public string[] dialogueLines;
+        [SerializeField] private string[] m_dialogueLines;
+
+        [SerializeField] private string[] m_choices;
+
+        public Actor Actor
+        {
+            get => m_actor;
+            set => m_actor = value;
+        }
+
+        public string[] DialogueLines
+        {
+            get => m_dialogueLines;
+            set => m_dialogueLines = value;
+        }
 
         public override string ToString()
         {
             StringBuilder dialogueString = new StringBuilder();
 
-            foreach (string line in dialogueLines)
+            foreach (string line in DialogueLines)
             {
                 dialogueString.Append(line + "\n");
             }
