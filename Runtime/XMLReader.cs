@@ -41,6 +41,8 @@ namespace Kindred.Kindalogue.Runtime
                     dialogues: dialogues
                 );
 
+            _actorHelper.ClearCache();
+
             return conversation;
         }
 

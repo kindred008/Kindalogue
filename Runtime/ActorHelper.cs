@@ -6,8 +6,20 @@ namespace Kindred.Kindalogue.Runtime
 {
     public class ActorHelper
     {
+        private Dictionary<string, Actor> _actorDictionary;
+
+        public ActorHelper()
+        {
+            _actorDictionary = new Dictionary<string, Actor>();
+        }
+
         public Actor LoadActor(string actorFileName) 
         {
+            if (_actorDictionary.ContainsKey(actorFileName))
+            {
+                return _actorDictionary[actorFileName];
+            }
+
             var actor = Resources.Load<Actor>(actorFileName);
 
             if (actor == null)
@@ -16,7 +28,13 @@ namespace Kindred.Kindalogue.Runtime
                 return null;
             }
 
+            _actorDictionary.Add(actorFileName, actor);
             return actor;
+        }
+
+        public void ClearCache()
+        {
+            _actorDictionary = new Dictionary<string, Actor>();
         }
     }
 }
