@@ -8,17 +8,6 @@ namespace Kindred.Kindalogue.Runtime
 {
     public class XMLReader : MonoBehaviour
     {
-        private void Start()
-        {
-            var convo = ReadDialogueFile("TestDialogue");
-
-            foreach (var dialogue in convo.Dialogues)
-            {
-                var dialogueActor = dialogue.Actor;
-                Debug.Log(string.IsNullOrEmpty(dialogueActor) ? convo.DefaultActor : dialogueActor);
-            }
-        }
-
         public Conversation ReadDialogueFile(string fileName)
         {
             TextAsset xmlFile = Resources.Load<TextAsset>(fileName);
@@ -35,24 +24,24 @@ namespace Kindred.Kindalogue.Runtime
             var defaultActor = defaultActorNode.InnerText.Trim();
 
             XmlNodeList dialogueNodes = xmlDocument.SelectNodes("Conversation/Dialogue");
-            var dialogues = CreateDialogueArray(dialogueNodes);
+            var dialogues = CreateDialogueArray(dialogueNodes, defaultActor);
 
             Conversation conversation = new Conversation
                 (
-                    defaultActor: defaultActor,
                     dialogues: dialogues
                 );
 
             return conversation;
         }
 
-        private Dialogue[] CreateDialogueArray(XmlNodeList dialogueNodes)
+        private Dialogue[] CreateDialogueArray(XmlNodeList dialogueNodes, string defaultActor)
         {
             List<Dialogue> dialogues = new List<Dialogue>();
 
             foreach (XmlNode dialogueNode in dialogueNodes)
             {
                 var actor = dialogueNode.SelectSingleNode("Actor").InnerText;
+                actor = string.IsNullOrEmpty(actor) ? defaultActor : actor;
 
                 XmlNodeList lineNodes = dialogueNode.SelectNodes("Line");
 

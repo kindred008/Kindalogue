@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class Conversation
 {
-    private string _defaultActor;
-
     private Dialogue[] _dialogues;
-
-    public string DefaultActor
-    {
-        get => _defaultActor;
-        set => _defaultActor = value;
-    }
 
     public Dialogue[] Dialogues
     {
@@ -20,9 +12,8 @@ public class Conversation
         set => _dialogues = value;
     }
 
-    public Conversation(string defaultActor, Dialogue[] dialogues)
+    public Conversation(Dialogue[] dialogues)
     {
-        _defaultActor = defaultActor;
         _dialogues = dialogues;
     }
 }
