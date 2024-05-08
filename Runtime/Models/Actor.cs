@@ -9,15 +9,9 @@ namespace Kindred.Kindalogue.Runtime
     [CreateAssetMenu(fileName = "actor", menuName = "Kindalogue/Actor")]
     public class Actor : ScriptableObject
     {
-        [SerializeField] private string _uniqueId;
         [SerializeField] private string _actorName;
         [SerializeField] private Sprite _defaultSprite;
         [SerializeField] private ActorSprite[] _sprites;
-
-        public string UniqueId
-        {
-            get => _uniqueId;
-        }
 
         public string ActorName
         {

@@ -64,7 +64,7 @@ namespace Kindred.Kindalogue.Runtime
 
                 XmlNodeList lineNodes = dialogueNode.SelectNodes("Line");
 
-                List<String> lines = new List<String>();
+                List<string> lines = new List<string>();
                 foreach (XmlNode lineNode in lineNodes)
                 {
                     var line = lineNode.InnerText.Trim();
