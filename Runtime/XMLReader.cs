@@ -8,9 +8,19 @@ namespace Kindred.Kindalogue.Runtime
 {
     public class XMLReader : MonoBehaviour
     {
+        [SerializeField] private string _dialogueRoot = "Dialogue";
+        [SerializeField] private string _actorRoot = "ScriptableObjects/Actors";
+
+        private ActorHelper _actorHelper;
+
+        private void Awake()
+        {
+            _actorHelper = new ActorHelper();
+        }
+
         public Conversation ReadDialogueFile(string fileName)
         {
-            TextAsset xmlFile = Resources.Load<TextAsset>(fileName);
+            TextAsset xmlFile = Resources.Load<TextAsset>($"{_dialogueRoot}/{fileName}");
 
             if (xmlFile == null)
             {
@@ -43,7 +53,7 @@ namespace Kindred.Kindalogue.Runtime
                 var actorName = dialogueNode.SelectSingleNode("Actor").InnerText;
                 actorName = string.IsNullOrEmpty(actorName) ? defaultActor : actorName;
 
-                var actor = ActorHelper.LoadActor(actorName);
+                var actor = _actorHelper.LoadActor($"{_actorRoot}/{actorName}");
 
                 if (actor == null)
                 {

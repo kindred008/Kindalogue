@@ -6,9 +6,9 @@ namespace Kindred.Kindalogue.Runtime
 {
     public class ActorHelper
     {
-        public static Actor LoadActor(string actorFileName) 
+        public Actor LoadActor(string actorFileName) 
         {
-            var actor = Resources.Load<Actor>($"ScriptableObjects/{actorFileName}");
+            var actor = Resources.Load<Actor>(actorFileName);
 
             if (actor == null)
             {
