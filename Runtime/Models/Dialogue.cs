@@ -2,27 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dialogue
+namespace Kindred.Kindalogue.Runtime
 {
-    private string _actor;
-
-    private string[] _dialogueLines;
-
-    public string Actor
+    public class Dialogue
     {
-        get => _actor;
-        set => _actor = value;
-    }
+        private Actor _actor;
 
-    public string[] DialogueLines
-    {
-        get => _dialogueLines; 
-        set => _dialogueLines = value;
-    }
+        private string[] _dialogueLines;
 
-    public Dialogue(string actor, string[] dialogueLines) 
-    {
-        _actor = actor;
-        _dialogueLines = dialogueLines;
+        public Actor Actor
+        {
+            get => _actor;
+            set => _actor = value;
+        }
+
+        public string[] DialogueLines
+        {
+            get => _dialogueLines;
+            set => _dialogueLines = value;
+        }
+
+        public Dialogue(Actor actor, string[] dialogueLines)
+        {
+            _actor = actor;
+            _dialogueLines = dialogueLines;
+        }
     }
 }

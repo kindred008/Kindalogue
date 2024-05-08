@@ -4,50 +4,53 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "actor", menuName = "Kindalogue/Actor")]
-public class Actor: ScriptableObject
+namespace Kindred.Kindalogue.Runtime
 {
-    [SerializeField] private string _uniqueId;
-    [SerializeField] private string _actorName;
-    [SerializeField] private Sprite _defaultSprite;
-    [SerializeField] private ActorSprite[] _sprites;
-
-    public string UniqueId
+    [CreateAssetMenu(fileName = "actor", menuName = "Kindalogue/Actor")]
+    public class Actor : ScriptableObject
     {
-        get => _uniqueId;
-    }
+        [SerializeField] private string _uniqueId;
+        [SerializeField] private string _actorName;
+        [SerializeField] private Sprite _defaultSprite;
+        [SerializeField] private ActorSprite[] _sprites;
 
-    public string ActorName
-    {
-        get => _actorName;
-    }
-
-    public Sprite GetActorSprite()
-    {
-        return _defaultSprite;
-    }
-
-    public Sprite GetActorSprite(string spriteName)
-    {
-        var sprite = _sprites.SingleOrDefault(x => x.Name == spriteName).Sprite ?? _defaultSprite;
-
-        return sprite;
-    }
-
-    [Serializable]
-    private struct ActorSprite
-    {
-        [SerializeField] private string _name;
-        [SerializeField] private Sprite _sprite;
-
-        public string Name
+        public string UniqueId
         {
-            get => _name;
+            get => _uniqueId;
         }
 
-        public Sprite Sprite
+        public string ActorName
         {
-            get => _sprite;
+            get => _actorName;
+        }
+
+        public Sprite GetActorSprite()
+        {
+            return _defaultSprite;
+        }
+
+        public Sprite GetActorSprite(string spriteName)
+        {
+            var sprite = _sprites.SingleOrDefault(x => x.Name == spriteName).Sprite ?? _defaultSprite;
+
+            return sprite;
+        }
+
+        [Serializable]
+        private struct ActorSprite
+        {
+            [SerializeField] private string _name;
+            [SerializeField] private Sprite _sprite;
+
+            public string Name
+            {
+                get => _name;
+            }
+
+            public Sprite Sprite
+            {
+                get => _sprite;
+            }
         }
     }
 }

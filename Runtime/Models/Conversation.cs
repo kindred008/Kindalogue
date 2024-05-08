@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conversation
+namespace Kindred.Kindalogue.Runtime
 {
-    private Dialogue[] _dialogues;
-
-    public Dialogue[] Dialogues
+    public class Conversation
     {
-        get => _dialogues;
-        set => _dialogues = value;
-    }
+        private Dialogue[] _dialogues;
 
-    public Conversation(Dialogue[] dialogues)
-    {
-        _dialogues = dialogues;
+        public Dialogue[] Dialogues
+        {
+            get => _dialogues;
+            set => _dialogues = value;
+        }
+
+        public Conversation(Dialogue[] dialogues)
+        {
+            _dialogues = dialogues;
+        }
     }
 }

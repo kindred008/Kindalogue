@@ -40,8 +40,15 @@ namespace Kindred.Kindalogue.Runtime
 
             foreach (XmlNode dialogueNode in dialogueNodes)
             {
-                var actor = dialogueNode.SelectSingleNode("Actor").InnerText;
-                actor = string.IsNullOrEmpty(actor) ? defaultActor : actor;
+                var actorName = dialogueNode.SelectSingleNode("Actor").InnerText;
+                actorName = string.IsNullOrEmpty(actorName) ? defaultActor : actorName;
+
+                var actor = ActorHelper.LoadActor(actorName);
+
+                if (actor == null)
+                {
+                    throw new Exception("Actor asset not found");
+                }
 
                 XmlNodeList lineNodes = dialogueNode.SelectNodes("Line");
 
