@@ -54,6 +54,7 @@ namespace Kindred.Kindalogue.Runtime
             {
                 var dialogueNode = dialogueNodes[i];
 
+                // ID 
                 XmlAttribute idAttribute = dialogueNode.Attributes["id"];
 
                 if (idAttribute == null)
@@ -63,6 +64,7 @@ namespace Kindred.Kindalogue.Runtime
 
                 var id = idAttribute.Value;
 
+                // Goto
                 XmlAttribute gotoAttribute = dialogueNode.Attributes["goto"];
                 string gotoId;
 
@@ -74,6 +76,7 @@ namespace Kindred.Kindalogue.Runtime
                     gotoId = gotoAttribute.Value;
                 }
 
+                // Actor
                 var actorName = dialogueNode.SelectSingleNode("Actor").InnerText;
                 actorName = string.IsNullOrEmpty(actorName) ? defaultActor : actorName;
 
@@ -84,6 +87,7 @@ namespace Kindred.Kindalogue.Runtime
                     throw new Exception("Actor asset not found");
                 }
 
+                // Dialogue Lines
                 XmlNodeList lineNodes = dialogueNode.SelectNodes("Line");
 
                 List<string> lines = new List<string>();
@@ -101,6 +105,7 @@ namespace Kindred.Kindalogue.Runtime
                         dialogueLines: lines.ToArray()
                     );
 
+                // 
                 dialogues.Add(dialogue);
             }
 
