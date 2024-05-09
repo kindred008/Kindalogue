@@ -50,8 +50,30 @@ namespace Kindred.Kindalogue.Runtime
         {
             List<Dialogue> dialogues = new List<Dialogue>();
 
-            foreach (XmlNode dialogueNode in dialogueNodes)
+            for (int i = 0; i < dialogueNodes.Count; i++)
             {
+                var dialogueNode = dialogueNodes[i];
+
+                XmlAttribute idAttribute = dialogueNode.Attributes["id"];
+
+                if (idAttribute == null)
+                {
+                    throw new Exception("Dialogue's must have an id attribute.");
+                }
+
+                var id = idAttribute.Value;
+
+                XmlAttribute gotoAttribute = dialogueNode.Attributes["goto"];
+                string gotoId;
+
+                if (gotoAttribute == null)
+                {
+                    gotoId = i < dialogueNodes.Count - 1 ? dialogueNodes[i + 1].Attributes["id"].Value : "";
+                } else
+                {
+                    gotoId = gotoAttribute.Value;
+                }
+
                 var actorName = dialogueNode.SelectSingleNode("Actor").InnerText;
                 actorName = string.IsNullOrEmpty(actorName) ? defaultActor : actorName;
 
@@ -73,6 +95,8 @@ namespace Kindred.Kindalogue.Runtime
 
                 Dialogue dialogue = new Dialogue
                     (
+                        id: id,
+                        gotoId: gotoId,
                         actor: actor,
                         dialogueLines: lines.ToArray()
                     );
