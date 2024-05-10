@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace Kindred.Kindalogue.Runtime
 {
-    [RequireComponent(typeof(XMLReader))]
     public class DialogueManager : MonoBehaviour
     {
         private static DialogueManager _instance;
@@ -16,6 +15,10 @@ namespace Kindred.Kindalogue.Runtime
             get => _instance;
             private set => _instance = value;
         }
+
+        [Header("XML Configuration")]
+        [SerializeField] private string _dialogueRoot = "Dialogue";
+        [SerializeField] private string _actorRoot = "ScriptableObjects/Actors";
 
         private Conversation _currentConversation;
         private Dialogue _currentDialogue;
@@ -49,7 +52,7 @@ namespace Kindred.Kindalogue.Runtime
                 DontDestroyOnLoad(gameObject);
             }
 
-            _xmlReader = GetComponent<XMLReader>();
+            _xmlReader = new XMLReader(_dialogueRoot, _actorRoot);
         }
 
         public void LoadConversation(string fileName)

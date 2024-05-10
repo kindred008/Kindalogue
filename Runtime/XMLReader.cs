@@ -6,15 +6,18 @@ using UnityEngine;
 
 namespace Kindred.Kindalogue.Runtime
 {
-    public class XMLReader : MonoBehaviour
+    public class XMLReader
     {
-        [SerializeField] private string _dialogueRoot = "Dialogue";
-        [SerializeField] private string _actorRoot = "ScriptableObjects/Actors";
+        private string _dialogueRoot;
+        private string _actorRoot;
 
         private ActorHelper _actorHelper;
 
-        private void Awake()
+        public XMLReader(string dialogueRoot, string actorRoot)
         {
+            _dialogueRoot = dialogueRoot;
+            _actorRoot = actorRoot;
+
             _actorHelper = new ActorHelper();
         }
 
