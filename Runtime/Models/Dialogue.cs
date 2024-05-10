@@ -5,25 +5,13 @@ using UnityEngine;
 
 namespace Kindred.Kindalogue.Runtime
 {
-    public class Dialogue
+    public class Dialogue: Node
     {
-        private string _id;
-
-        private string _goto;
-
         private Actor _actor;
 
         private string[] _dialogueLines;
 
-        public string Id
-        {
-            get => _id;
-        }
-
-        public string Goto
-        {
-            get => _goto;
-        }
+        private Choice[] _choices;
 
         public Actor Actor
         {
@@ -37,18 +25,24 @@ namespace Kindred.Kindalogue.Runtime
             set => _dialogueLines = value;
         }
 
-        public Dialogue(string id, string gotoId, Actor actor, string[] dialogueLines)
+        public Choice[] Choices
+        {
+            get => _choices;
+            set => _choices = value;
+        }
+
+        public Dialogue(string id, string gotoId, Actor actor, string[] dialogueLines, Choice[] choices)
         {
             _id = id;
             _goto = gotoId;
             _actor = actor;
             _dialogueLines = dialogueLines;
+            _choices = choices;
         }
 
         public override string ToString()
         {
             return Actor.ActorName + ": " + Environment.NewLine + string.Join(Environment.NewLine, DialogueLines);
-
         }
     }
 }
