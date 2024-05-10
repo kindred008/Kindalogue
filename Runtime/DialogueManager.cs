@@ -4,114 +4,119 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(XMLReader))]
-public class DialogueManager : MonoBehaviour
+namespace Kindred.Kindalogue.Runtime
 {
-    private static DialogueManager _instance;
-
-    public static DialogueManager Instance
+    [RequireComponent(typeof(XMLReader))]
+    public class DialogueManager : MonoBehaviour
     {
-        get => _instance;
-        private set => _instance = value;
-    }
+        private static DialogueManager _instance;
 
-    private Conversation _currentConversation;
-    private Dialogue _currentDialogue;
-
-    private XMLReader _xmlReader;
-
-    private bool _dialogueFinished = false;
-
-    public Conversation CurrentConversation
-    {
-        get => _currentConversation;
-        private set => _currentConversation = value;
-    }
-
-    public Dialogue CurrentDialogue
-    {
-        get => _currentDialogue;
-        private set => _currentDialogue = value;
-    }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
+        public static DialogueManager Instance
         {
-            Destroy(gameObject);
-            return;
-        } else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            get => _instance;
+            private set => _instance = value;
         }
 
-        _xmlReader = GetComponent<XMLReader>();
-    }
+        private Conversation _currentConversation;
+        private Dialogue _currentDialogue;
 
-    public void LoadConversation(string fileName)
-    {
-        CurrentConversation = null;
-        CurrentDialogue = null;
-        _dialogueFinished = false;
+        private XMLReader _xmlReader;
 
-        CurrentConversation = _xmlReader.ReadDialogueFile(fileName);
-    }
+        private bool _dialogueFinished = false;
 
-    public Dialogue GetNextDialogue()
-    {
-        if (CurrentConversation == null)
+        public Conversation CurrentConversation
         {
-            Debug.LogError("Conversation not loaded");
-            return null;
+            get => _currentConversation;
+            private set => _currentConversation = value;
         }
 
-        if (CurrentDialogue == null && !_dialogueFinished)
+        public Dialogue CurrentDialogue
         {
-            CurrentDialogue = CurrentConversation.GetFirstDialogue;
-        } else
+            get => _currentDialogue;
+            private set => _currentDialogue = value;
+        }
+
+        private void Awake()
         {
-            if (CurrentDialogue.Choices.Length > 0 && !CurrentDialogue.ChoiceMade)
+            if (Instance != null && Instance != this)
             {
-                Debug.LogWarning("Need to make choice");
+                Destroy(gameObject);
+                return;
+            }
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+
+            _xmlReader = GetComponent<XMLReader>();
+        }
+
+        public void LoadConversation(string fileName)
+        {
+            CurrentConversation = null;
+            CurrentDialogue = null;
+            _dialogueFinished = false;
+
+            CurrentConversation = _xmlReader.ReadDialogueFile(fileName);
+        }
+
+        public Dialogue GetNextDialogue()
+        {
+            if (CurrentConversation == null)
+            {
+                Debug.LogError("Conversation not loaded");
                 return null;
             }
 
-            var nextDialogueId = CurrentDialogue.Goto;
-
-            if (string.IsNullOrEmpty(nextDialogueId))
+            if (CurrentDialogue == null && !_dialogueFinished)
             {
-                _dialogueFinished = true;
-                Debug.Log("Dialogue finished");
-                return null;
+                CurrentDialogue = CurrentConversation.GetFirstDialogue;
+            }
+            else
+            {
+                if (CurrentDialogue.Choices.Length > 0 && !CurrentDialogue.ChoiceMade)
+                {
+                    Debug.LogWarning("Need to make choice");
+                    return null;
+                }
+
+                var nextDialogueId = CurrentDialogue.Goto;
+
+                if (string.IsNullOrEmpty(nextDialogueId))
+                {
+                    _dialogueFinished = true;
+                    Debug.Log("Dialogue finished");
+                    return null;
+                }
+
+                CurrentDialogue = CurrentConversation.GetDialogue(nextDialogueId);
+                CurrentDialogue.ChoiceMade = false;
             }
 
-            CurrentDialogue = CurrentConversation.GetDialogue(nextDialogueId);
-            CurrentDialogue.ChoiceMade = false;
+            return CurrentDialogue;
         }
 
-        return CurrentDialogue;
-    }
-
-    public bool MakeChoice(string choiceId)
-    {
-        if (CurrentDialogue == null || _dialogueFinished || CurrentDialogue.Choices.Length == 0)
+        public bool MakeChoice(string choiceId)
         {
-            Debug.LogWarning("No choice to make");
-            return false;
+            if (CurrentDialogue == null || _dialogueFinished || CurrentDialogue.Choices.Length == 0)
+            {
+                Debug.LogWarning("No choice to make");
+                return false;
+            }
+
+            var choice = CurrentDialogue.Choices.SingleOrDefault(x => x.Id == choiceId);
+
+            if (choice == null)
+            {
+                Debug.LogWarning("Choice doesn't exist");
+                return false;
+            }
+
+            CurrentDialogue.Goto = choice.Goto;
+            CurrentDialogue.ChoiceMade = true;
+
+            return true;
         }
-
-        var choice = CurrentDialogue.Choices.SingleOrDefault(x => x.Id == choiceId);
-
-        if (choice == null)
-        {
-            Debug.LogWarning("Choice doesn't exist");
-            return false;
-        }
-
-        CurrentDialogue.Goto = choice.Goto;
-        CurrentDialogue.ChoiceMade = true;
-
-        return true;
     }
 }

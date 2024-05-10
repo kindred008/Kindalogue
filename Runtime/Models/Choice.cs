@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Choice: Node
+namespace Kindred.Kindalogue.Runtime
 {
-    private string _choiceText;
-
-    public string ChoiceText
+    public class Choice : Node
     {
-        get => _choiceText;
-        set => _choiceText = value;
-    }
+        private string _choiceText;
 
-    public Choice(string id, string gotoId, string choiceText)
-    {
-        _id = id;
-        _goto = gotoId;
-        _choiceText = choiceText;
-    }
+        public string ChoiceText
+        {
+            get => _choiceText;
+            set => _choiceText = value;
+        }
 
-    public override string ToString()
-    {
-        return ChoiceText;
+        public Choice(string id, string gotoId, string choiceText)
+        {
+            _id = id;
+            _goto = gotoId;
+            _choiceText = choiceText;
+        }
+
+        public override string ToString()
+        {
+            return ChoiceText;
+        }
     }
 }
