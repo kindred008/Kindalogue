@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Kindred.Kindalogue.Runtime
 {
@@ -15,6 +16,8 @@ namespace Kindred.Kindalogue.Runtime
             get => _instance;
             private set => _instance = value;
         }
+
+        public static UnityEvent<Dialogue> DialogueUpdated = new UnityEvent<Dialogue>();
 
         [Header("XML Configuration")]
         [SerializeField] private string _dialogueRoot = "Dialogue";
@@ -90,12 +93,16 @@ namespace Kindred.Kindalogue.Runtime
                 {
                     _dialogueFinished = true;
                     Debug.Log("Dialogue finished");
+
+                    DialogueUpdated.Invoke(null);
                     return null;
                 }
 
                 CurrentDialogue = CurrentConversation.GetDialogue(nextDialogueId);
                 CurrentDialogue.ChoiceMade = false;
             }
+
+            DialogueUpdated.Invoke(CurrentDialogue);
 
             return CurrentDialogue;
         }
