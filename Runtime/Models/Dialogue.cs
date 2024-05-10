@@ -13,6 +13,8 @@ namespace Kindred.Kindalogue.Runtime
 
         private Choice[] _choices;
 
+        private bool _choiceMade = false;
+
         public Actor Actor
         {
             get => _actor;
@@ -29,6 +31,12 @@ namespace Kindred.Kindalogue.Runtime
         {
             get => _choices;
             set => _choices = value;
+        }
+
+        public bool ChoiceMade
+        {
+            get => _choiceMade;
+            set => _choiceMade = value;
         }
 
         public Dialogue(string id, string gotoId, Actor actor, string[] dialogueLines, Choice[] choices)

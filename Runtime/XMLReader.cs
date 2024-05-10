@@ -64,18 +64,6 @@ namespace Kindred.Kindalogue.Runtime
 
                 var id = idAttribute.Value;
 
-                // Goto
-                XmlAttribute gotoAttribute = dialogueNode.Attributes["goto"];
-                string gotoId;
-
-                if (gotoAttribute == null)
-                {
-                    gotoId = i < dialogueNodes.Count - 1 ? dialogueNodes[i + 1].Attributes["id"].Value : "";
-                } else
-                {
-                    gotoId = gotoAttribute.Value;
-                }
-
                 // Actor
                 var actorName = dialogueNode.SelectSingleNode("Actor").InnerText;
                 actorName = string.IsNullOrEmpty(actorName) ? defaultActor : actorName;
@@ -100,6 +88,23 @@ namespace Kindred.Kindalogue.Runtime
                 // Choices
                 XmlNodeList choiceNodes = dialogueNode.SelectNodes("Choices/Choice");
                 var choices = CreateChoicesArray(choiceNodes);
+
+                // Goto
+                XmlAttribute gotoAttribute = dialogueNode.Attributes["goto"];
+                string gotoId;
+
+                if (gotoAttribute == null && choices.Length == 0)
+                {
+                    gotoId = i < dialogueNodes.Count - 1 ? dialogueNodes[i + 1].Attributes["id"].Value : "";
+                }
+                else if (gotoAttribute == null && choices.Length > 0)
+                {
+                    gotoId = "";
+                }
+                else
+                {
+                    gotoId = gotoAttribute.Value;
+                }
 
                 // Create Dialogue
                 Dialogue dialogue = new Dialogue

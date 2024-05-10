@@ -16,5 +16,6 @@ public class Node
     public string Goto
     {
         get => _goto;
+        set => _goto = value;
     }
 }

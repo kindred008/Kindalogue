@@ -18,4 +18,9 @@ public class Choice: Node
         _goto = gotoId;
         _choiceText = choiceText;
     }
+
+    public override string ToString()
+    {
+        return ChoiceText;
+    }
 }

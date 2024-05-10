@@ -1,6 +1,7 @@
 using Kindred.Kindalogue.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(XMLReader))]
@@ -70,6 +71,12 @@ public class DialogueManager : MonoBehaviour
             CurrentDialogue = CurrentConversation.GetFirstDialogue;
         } else
         {
+            if (CurrentDialogue.Choices.Length > 0 && !CurrentDialogue.ChoiceMade)
+            {
+                Debug.LogWarning("Need to make choice");
+                return null;
+            }
+
             var nextDialogueId = CurrentDialogue.Goto;
 
             if (string.IsNullOrEmpty(nextDialogueId))
@@ -80,8 +87,31 @@ public class DialogueManager : MonoBehaviour
             }
 
             CurrentDialogue = CurrentConversation.GetDialogue(nextDialogueId);
+            CurrentDialogue.ChoiceMade = false;
         }
 
         return CurrentDialogue;
+    }
+
+    public bool MakeChoice(string choiceId)
+    {
+        if (CurrentDialogue == null || _dialogueFinished || CurrentDialogue.Choices.Length == 0)
+        {
+            Debug.LogWarning("No choice to make");
+            return false;
+        }
+
+        var choice = CurrentDialogue.Choices.SingleOrDefault(x => x.Id == choiceId);
+
+        if (choice == null)
+        {
+            Debug.LogWarning("Choice doesn't exist");
+            return false;
+        }
+
+        CurrentDialogue.Goto = choice.Goto;
+        CurrentDialogue.ChoiceMade = true;
+
+        return true;
     }
 }
