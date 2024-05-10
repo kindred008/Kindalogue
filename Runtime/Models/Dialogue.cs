@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,6 +43,12 @@ namespace Kindred.Kindalogue.Runtime
             _goto = gotoId;
             _actor = actor;
             _dialogueLines = dialogueLines;
+        }
+
+        public override string ToString()
+        {
+            return Actor.ActorName + ": " + Environment.NewLine + string.Join(Environment.NewLine, DialogueLines);
+
         }
     }
 }
