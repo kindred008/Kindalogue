@@ -97,19 +97,70 @@ namespace Kindred.Kindalogue.Runtime
                     lines.Add(line);
                 }
 
+                // Choices
+                XmlNodeList choiceNodes = dialogueNode.SelectNodes("Choices/Choice");
+                var choices = CreateChoicesArray(choiceNodes);
+
+                // Create Dialogue
                 Dialogue dialogue = new Dialogue
                     (
                         id: id,
                         gotoId: gotoId,
                         actor: actor,
-                        dialogueLines: lines.ToArray()
+                        dialogueLines: lines.ToArray(),
+                        choices: choices
                     );
 
-                // 
                 dialogues.Add(dialogue);
             }
 
             return dialogues.ToArray();
+        }
+
+        private Choice[] CreateChoicesArray(XmlNodeList choiceNodes)
+        {
+            List<Choice> choices = new List<Choice>();
+
+            foreach (XmlNode choiceNode in choiceNodes)
+            {
+                // ID
+                XmlAttribute idAttribute = choiceNode.Attributes["id"];
+
+                if (idAttribute == null)
+                {
+                    throw new Exception("Choices must have an id attribute.");
+                }
+
+                var id = idAttribute.Value;
+
+                // Goto
+                XmlAttribute gotoAttribute = choiceNode.Attributes["goto"];
+
+                string gotoId;
+
+                if (gotoAttribute == null)
+                {
+                    gotoId = "";
+                } else
+                {
+                    gotoId = gotoAttribute.Value;
+                }
+
+                // Choice text
+                var choiceText = choiceNode.InnerText;
+
+                // Create Choice
+                Choice choice = new Choice
+                    (
+                        id: id,
+                        gotoId: gotoId,
+                        choiceText: choiceText
+                    );
+
+                choices.Add(choice);
+            }
+
+            return choices.ToArray();
         }
     }
 }
