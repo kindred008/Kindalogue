@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Kindred.Kindalogue.Runtime
 {
@@ -18,6 +19,9 @@ namespace Kindred.Kindalogue.Runtime
 
         [Header("UI Prefabs")]
         [SerializeField] private GameObject _choiceTextPrefab;
+
+        [Header("Images")]
+        [SerializeField] private Image _actorImage;
 
         private void OnEnable()
         {
@@ -37,6 +41,7 @@ namespace Kindred.Kindalogue.Runtime
             }
 
             _choicesPanel.SetActive(false);
+            _actorImage.enabled = false;
 
             if (newDialogue == null)
             {
@@ -47,6 +52,14 @@ namespace Kindred.Kindalogue.Runtime
             _dialoguePanel.SetActive(true);
 
             _actorText.text = newDialogue.Actor.ActorName;
+
+            var actorImage = newDialogue.Actor.GetActorSprite(newDialogue.Emotion);
+
+            if (actorImage != null)
+            {
+                _actorImage.sprite = actorImage;
+                _actorImage.enabled = true;
+            }
 
             StringBuilder sb = new StringBuilder();
             foreach (var line in newDialogue.DialogueLines)

@@ -78,6 +78,9 @@ namespace Kindred.Kindalogue.Runtime
                     throw new Exception("Actor asset not found");
                 }
 
+                // Emotion
+                var emotion = dialogueNode.SelectSingleNode("Emotion")?.InnerText ?? "";
+
                 // Dialogue Lines
                 XmlNodeList lineNodes = dialogueNode.SelectNodes("Line");
 
@@ -115,6 +118,7 @@ namespace Kindred.Kindalogue.Runtime
                         id: id,
                         gotoId: gotoId,
                         actor: actor,
+                        emotion: emotion,
                         dialogueLines: lines.ToArray(),
                         choices: choices
                     );

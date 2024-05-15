@@ -9,6 +9,8 @@ namespace Kindred.Kindalogue.Runtime
     {
         private Actor _actor;
 
+        private string _emotion;
+
         private string[] _dialogueLines;
 
         private Choice[] _choices;
@@ -19,6 +21,12 @@ namespace Kindred.Kindalogue.Runtime
         {
             get => _actor;
             set => _actor = value;
+        }
+
+        public string Emotion
+        {
+            get => _emotion;
+            set => _emotion = value;
         }
 
         public string[] DialogueLines
@@ -39,11 +47,12 @@ namespace Kindred.Kindalogue.Runtime
             set => _choiceMade = value;
         }
 
-        public Dialogue(string id, string gotoId, Actor actor, string[] dialogueLines, Choice[] choices)
+        public Dialogue(string id, string gotoId, Actor actor, string emotion, string[] dialogueLines, Choice[] choices)
         {
             _id = id;
             _goto = gotoId;
             _actor = actor;
+            _emotion = emotion;
             _dialogueLines = dialogueLines;
             _choices = choices;
         }
