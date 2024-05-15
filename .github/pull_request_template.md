@@ -6,7 +6,6 @@
 
 ## Checklist before merge
 - [ ] Feature is fully working.
-- [ ] Code is fully documented.
 - [ ] Code has been self-reviewed.
 - [ ] Changelog has been updated.
 
