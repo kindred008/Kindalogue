@@ -15,6 +15,8 @@ namespace Kindred.Kindalogue.Runtime
 
         private Choice[] _choices;
 
+        private Dictionary<string, string> _customFields;
+
         private bool _choiceMade = false;
 
         public Actor Actor
@@ -41,13 +43,19 @@ namespace Kindred.Kindalogue.Runtime
             set => _choices = value;
         }
 
+        public Dictionary<string, string> CustomFields
+        {
+            get => _customFields;
+            set => _customFields = value;
+        }
+
         public bool ChoiceMade
         {
             get => _choiceMade;
             set => _choiceMade = value;
         }
 
-        public Dialogue(string id, string gotoId, Actor actor, string emotion, string[] dialogueLines, Choice[] choices)
+        public Dialogue(string id, string gotoId, Actor actor, string emotion, string[] dialogueLines, Choice[] choices, Dictionary<string, string> customFields)
         {
             _id = id;
             _goto = gotoId;
@@ -55,6 +63,7 @@ namespace Kindred.Kindalogue.Runtime
             _emotion = emotion;
             _dialogueLines = dialogueLines;
             _choices = choices;
+            _customFields = customFields;
         }
 
         public override string ToString()

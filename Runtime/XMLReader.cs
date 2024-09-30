@@ -112,6 +112,10 @@ namespace Kindred.Kindalogue.Runtime
                     gotoId = gotoAttribute.Value;
                 }
 
+                // Custom
+                var customNode = dialogueNode.SelectSingleNode("Custom");
+                var customDictionary = CreateCustomDictionary(customNode);
+
                 // Create Dialogue
                 Dialogue dialogue = new Dialogue
                     (
@@ -120,7 +124,8 @@ namespace Kindred.Kindalogue.Runtime
                         actor: actor,
                         emotion: emotion,
                         dialogueLines: lines.ToArray(),
-                        choices: choices
+                        choices: choices,
+                        customFields: customDictionary
                     );
 
                 dialogues.Add(dialogue);
@@ -173,6 +178,22 @@ namespace Kindred.Kindalogue.Runtime
             }
 
             return choices.ToArray();
+        }
+
+        private Dictionary<string, string> CreateCustomDictionary(XmlNode customNode)
+        {
+            var customDictionary = new Dictionary<string, string>();
+
+            if (customNode != null) 
+            {
+                var customNodes = customNode.ChildNodes;
+                foreach (XmlNode customElement in customNodes)
+                {
+                    customDictionary.Add(customElement.Name, customElement.InnerText);
+                }
+            }
+
+            return customDictionary;
         }
     }
 }
